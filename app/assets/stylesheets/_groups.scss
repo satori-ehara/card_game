@@ -1,0 +1,85 @@
+@mixin center() {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.header{
+  width: 100vw;
+  height: 100px;
+  background-color: lightgreen;
+  display: flex;
+  &__group{
+    width: 20%;
+    height: 100%;
+    background-color: #98fb98;
+    @include center();
+    &--new{
+      display: block;
+      width: 40%;
+      height: 35px;
+      background-color: lightblue;
+      border: solid 1px blue;
+      @include center();
+      text-decoration: none;
+      color: black;
+    }
+  }
+  &__title{
+    width: 60%;
+    height: 100%;
+  }
+  &__devise{
+    width: 20%;
+    height: 100%;
+    background-color: #98fb98;
+    @include center();
+    &--new,&--login{
+      display: block;
+      width: 40%;
+      height: 35px;
+      background-color: lightblue;
+      border: solid 1px blue;
+      @include center();
+      text-decoration: none;
+      color: black;
+    }
+  }
+}
+
+.main{
+  height: calc(100vh - 100px);
+  display: flex;
+  &__side--left,&__side--right{
+    height: 100%;
+    width: 20%;
+    background-color: #7fffd4;
+  }
+  &__groups{
+    height: 100%;
+    width: 60%;
+    background-color: #98fb98;
+    &--group{
+      display: block;
+      text-decoration: none;
+      color: black;
+      height: 100px;
+      width: auto;
+      margin: 25px;
+      border: solid 1px black;
+      background-color: cornsilk;
+      .group-name{
+        font-size: 35px;
+        margin: 10px 0 0 10px;
+      }
+      .player-name{
+        height: 30px;
+        @include center();
+        &__kou,&__otu{
+          border: solid 1px black;
+          padding: 3px;
+        }
+      }
+    }
+  }
+}
