@@ -1,0 +1,77 @@
+@mixin center() {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+#card{
+  height: 120px;
+  width: 80px;
+  border: solid 1px black;
+  background-color: cornsilk;
+  font-size: 50px;
+  @include center();
+  margin: 0 20px;
+}
+.game-header{
+  width: 100vw;
+  height: 100px;
+  @include center();
+  &__left{
+    width: 20%;
+    height: 100%;
+    background-color: lightgreen;
+  }
+  &__right{
+    width: 80%;
+    height: 100%;
+    background-color: #98fb98;
+  }
+}
+.game{
+  @include center()
+}
+.game-side{
+  width: 20vw;
+  height: calc(100vh - 100px);
+  background-color: lightgreen;
+}
+.game-main{
+  width: 80vw;
+  height: calc(100vh - 100px);
+  &__enemy{
+    width: 100%;
+    height: 30%;
+    background-color: #FFE9E9;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  &__center{
+    width: 100%;
+    height: 20%;
+    background-color: wheat;
+    @include center();
+  }
+  &__player{
+    width: 100%;
+    height: 50%;
+    background-color: #E9E9FF;
+    &--message{
+      width: 100%;
+      height: 35%;
+      @include center();
+      .message{
+        background-color: wheat;
+        padding: 8px;
+        border: solid 3px black;
+      }
+    }
+    &--hands{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+}
+  
