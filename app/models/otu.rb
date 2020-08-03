@@ -1,0 +1,2 @@
+class Otu < ApplicationRecord
+end

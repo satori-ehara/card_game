@@ -1,35 +1,7 @@
-= form_with model: group, local: true do |f|
-  .SettingGroupForm__field
-    .SettingGroupForm__leftField
-      = f.label :name, "グループ名", class: 'SettingGroupForm__label'
-    .SettingGroupForm__rightField
-      = f.text_field :name, class: 'SettingGroupForm__input', placeholder: 'グループ名を入力してください'
-  .SettingGroupForm__field
-    .SettingGroupForm__leftField
-      %label.SettingGroupForm__label チャットメンバーを追加
-    .SettingGroupForm__rightField
-      .UserSearch
-        %input#UserSearch__field.SettingGroupForm__input{placeholder: "追加したいユーザー名を入力してください", type: "text"}/
-      #UserSearchResult
-  .SettingGroupForm__field
-    .SettingGroupForm__leftField
-      = f.label :name, value: "チャットメンバー", class: "SettingGroupForm__label"
-    .SettingGroupForm__rightField
-      .ChatMembers
-        .ChatMember
-          %p.ChatMember__name= current_user.name
-          %input{name: "group[user_ids][]", type: "hidden", value: current_user.id}
-        - group.users.each do |user|
-          - if user.id != current_user.id
-            .ChatMember
-              %p.ChatMember__name= user.name
-              %input{name: "group[user_ids][]", type: "hidden", value: user.id}
-              // <div class="ChatMember__remove ChatMember__button">削除</div>
-              .ChatMember__remove.ChatMember__button= "削除"
-
-
-
-  .SettingGroupForm__field
-    .SettingGroupForm__leftField
-    .SettingGroupForm__rightField
-      = f.submit class: 'SettingGroupForm__button'
+= form_with url: groups_path, local: true do |f|
+  .create-group__name
+    = f.text_field :name, class: "SettingGroupForm__input", placeholder: "グループ名を入力してください"
+  .create-group__player--otu
+    = f.collection_radio_buttons :hoge, User.all, :id, :nickname
+  .create-group__btn
+    = f.submit "部屋作成", class: "SettingGroupForm__button"
