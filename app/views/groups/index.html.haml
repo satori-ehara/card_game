@@ -5,7 +5,7 @@
   .header__title
   .header__devise
     - if user_signed_in?
-      = link_to "#",class: "header__devise--login" do
+      = link_to destroy_user_session_path, method: :delete,class: "header__devise--login" do
         = current_user.nickname
     - else
       = link_to "#",class: "header__devise--login" do
