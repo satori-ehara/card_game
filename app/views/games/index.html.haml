@@ -1,5 +1,8 @@
 .game-header
   .game-header__left
+    = form_with url: groups_path, local: true do |f|
+      .create-game__btn
+        = f.submit "ゲーム開始", class: "start-game"
   .game-header__right
 .game
   .game-side

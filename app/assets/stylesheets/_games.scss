@@ -13,6 +13,18 @@
   @include center();
   margin: 0 20px;
 }
+
+.start-game{
+  display: block;
+  width: 100%;
+  height: 35px;
+  background-color: lightblue;
+  border: solid 1px white;
+  @include center();
+  text-decoration: none;
+  color: black;
+}
+
 .game-header{
   width: 100vw;
   height: 100px;
@@ -21,6 +33,7 @@
     width: 20%;
     height: 100%;
     background-color: lightgreen;
+    @include center();
   }
   &__right{
     width: 80%;
