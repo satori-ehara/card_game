@@ -41,8 +41,6 @@ class GamesController < ApplicationController
   end
 
   def kou_create
-    join_hand(@kou_hand)
-    join_hand(@kou_hand)
     @kou.hand = @kou_hand
     @kou.user_id = Group.find_by(id: params[:group_id]).kou_user
     @kou.game_id = Game.find_by(group_id: params[:group_id]).id
@@ -50,7 +48,6 @@ class GamesController < ApplicationController
   end
 
   def otu_create
-    join_hand(@otu_hand)
     @otu.hand = @otu_hand
     @otu.user_id = Group.find_by(id: params[:group_id]).otu_user
     @otu.game_id = Game.find_by(group_id: params[:group_id]).id
