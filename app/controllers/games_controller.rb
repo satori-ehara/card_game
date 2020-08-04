@@ -15,6 +15,9 @@ class GamesController < ApplicationController
     params[:action] = "create"
     @kou_hand = []
     @otu_hand = []
+    join_hand(@kou_hand)
+    join_hand(@kou_hand)
+    join_hand(@otu_hand)
     @games = Game.new(games_params)
     @games.deck << params[:deck][0] << params[:deck][1]
     if @games.save
@@ -58,5 +61,8 @@ class GamesController < ApplicationController
   def join_hand(hand)
     hand << params[:deck][0][0]
     params[:deck][0] = params[:deck][0].drop(1)
+  end
+
+  def create_hand
   end
 end
