@@ -14,7 +14,7 @@ ActiveRecord::Schema.define(version: 2020_08_03_091605) do
 
   create_table "games", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "condition"
-    t.string "deck"
+    t.text "deck"
     t.integer "field_card"
     t.string "turn"
     t.string "action"
