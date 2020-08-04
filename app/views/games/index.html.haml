@@ -18,17 +18,18 @@
       .game-main__enemy--hand-card#card
         0
     .game-main__center
-      .game-main__center--deck
-        = "残  " + @game.deck[0].length.to_s + "枚"
-      .game-main__center--field-card
-        = @game.field_card
-      .game-main__center--turn
-        - if @game.turn == "kou"
-          .your
-            Your Turn
-        - else
-          .enemy
-            Enemy Turn
+      - if @game != nil
+        .game-main__center--deck
+          = "残  " + @game.deck[0].length.to_s + "枚"
+        .game-main__center--field-card
+          = @game.field_card
+        .game-main__center--turn
+          - if @game.turn == "kou"
+            .your
+              Your Turn
+          - else
+            .enemy
+              Enemy Turn
     .game-main__player
       .game-main__player--message
         .message

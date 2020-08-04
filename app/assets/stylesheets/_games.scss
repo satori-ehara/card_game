@@ -65,6 +65,16 @@
     height: 20%;
     background-color: wheat;
     @include center();
+    &--turn{
+      .your{
+        padding: 3px;
+        border: solid 1px black;
+        background-color: #E9E9FF;
+      }
+      .enemy{
+        background-color: #FFE9E9
+      }
+    }
   }
   &__player{
     width: 100%;

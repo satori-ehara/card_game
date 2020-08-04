@@ -1,7 +1,6 @@
 class GamesController < ApplicationController
   def index
     @game = Game.find_by(group_id: params[:group_id])
-    binding.pry
   end
 
   def new
@@ -14,9 +13,15 @@ class GamesController < ApplicationController
     params[:turn] = "kou"
     params[:turn_count] = 0
     params[:action] = "create"
+    @kou_hand = []
+    @otu_hand = []
     @games = Game.new(games_params)
     @games.deck << params[:deck][0] << params[:deck][1]
     if @games.save
+      @kou = Kou.new()
+      @otu = Otu.new()
+      kou_create
+      otu_create
       redirect_to group_games_path(params[:group_id])
     end
   end
@@ -30,5 +35,28 @@ class GamesController < ApplicationController
 
   def games_params
     params.permit(:condition,:deck,:field_card,:turn,:turn_count,:action,:group_id)
+  end
+
+  def kou_create
+    join_hand(@kou_hand)
+    join_hand(@kou_hand)
+    @kou.hand = @kou_hand
+    @kou.user_id = Group.find_by(id: params[:group_id]).kou_user
+    @kou.game_id = Game.find_by(group_id: params[:group_id]).id
+    @kou.save
+  end
+
+  def otu_create
+    join_hand(@otu_hand)
+    @otu.hand = @otu_hand
+    @otu.user_id = Group.find_by(id: params[:group_id]).otu_user
+    @otu.game_id = Game.find_by(group_id: params[:group_id]).id
+    @otu.save
+  end
+
+
+  def join_hand(hand)
+    hand << params[:deck][0][0]
+    params[:deck][0] = params[:deck][0].drop(1)
   end
 end
