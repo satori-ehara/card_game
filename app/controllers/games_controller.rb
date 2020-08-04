@@ -1,5 +1,6 @@
 class GamesController < ApplicationController
   def index
+    @game = Game.find_by(group_id: params[:group_id])
     binding.pry
   end
 
@@ -28,6 +29,6 @@ class GamesController < ApplicationController
   end
 
   def games_params
-    params.permit(:condition,:deck,:field_card,:turn,:turn_count,:action)
+    params.permit(:condition,:deck,:field_card,:turn,:turn_count,:action,:group_id)
   end
 end
