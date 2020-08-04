@@ -14,8 +14,8 @@
         新規登録
 .main
   .main__side--left
-  - Group.all.each do |group|
-    .main__groups
+  .main__groups
+    - Group.all.each do |group|
       = link_to group_games_path(group.id),class: "main__groups--group" do
         .group-name
           = group.name
