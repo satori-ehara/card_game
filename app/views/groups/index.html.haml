@@ -1,11 +1,11 @@
 .header
   .header__group
-    = link_to "#",class: "header__group--new" do
+    = link_to new_group_path,class: "header__group--new" do
       部屋作成
   .header__title
   .header__devise
     - if user_signed_in?
-      = link_to "#",class: "header__devise--login" do
+      = link_to destroy_user_session_path, method: :delete,class: "header__devise--login" do
         = current_user.nickname
     - else
       = link_to "#",class: "header__devise--login" do
@@ -14,15 +14,16 @@
         新規登録
 .main
   .main__side--left
-  .main__groups
-    = link_to "#",class: "main__groups--group" do
-      .group-name
-        テスト部屋
-      .player-name
-        .player-name__kou
-          satorin
-        .player_name__vs
-          対
-        .player-name__otu
-          さとりん
+  - Group.all.each do |group|
+    .main__groups
+      = link_to group_games_path(group.id),class: "main__groups--group" do
+        .group-name
+          = group.name
+        .player-name
+          .player-name__kou
+            = User.find(group.kou_user).nickname
+          .player_name__vs
+            対
+          .player-name__otu
+            = User.find(group.otu_user).nickname
   .main__side--right
