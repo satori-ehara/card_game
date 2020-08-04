@@ -19,11 +19,16 @@
         0
     .game-main__center
       .game-main__center--deck
-        17枚
+        = "残  " + @game.deck[0].length.to_s + "枚"
       .game-main__center--field-card
-        8
+        = @game.field_card
       .game-main__center--turn
-        Your Turn
+        - if @game.turn == "kou"
+          .your
+            Your Turn
+        - else
+          .enemy
+            Enemy Turn
     .game-main__player
       .game-main__player--message
         .message

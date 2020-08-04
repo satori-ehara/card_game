@@ -11,7 +11,7 @@ class GamesController < ApplicationController
     create_deck
     params[:condition] = "started"
     params[:field_card] = 0
-    params[:turn] = "0"
+    params[:turn] = "kou"
     params[:turn_count] = 0
     params[:action] = "create"
     @games = Game.new(games_params)
