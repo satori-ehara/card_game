@@ -1,6 +1,7 @@
 class GamesController < ApplicationController
+  before_action :get_game,only: [:index,:destroy]
+
   def index
-    @game = Game.find_by(group_id: params[:group_id])
   end
 
   def new
@@ -27,6 +28,15 @@ class GamesController < ApplicationController
       otu_create
       redirect_to group_games_path(params[:group_id])
     end
+  end
+
+  def destroy
+    @kou = Kou.find_by(game_id: @game.id)
+    @otu = Otu.find_by(game_id: @game.id)
+    @kou.destroy
+    @otu.destroy
+    @game.destroy
+    redirect_to group_games_path(params[:group_id])
   end
 
   private
@@ -61,5 +71,9 @@ class GamesController < ApplicationController
   end
 
   def create_hand
+  end
+
+  def get_game
+    @game = Game.find_by(group_id: params[:group_id])
   end
 end
