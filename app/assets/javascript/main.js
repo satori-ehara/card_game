@@ -1,7 +1,7 @@
 $(function() {
+  console.log(gon)
 
   function ajax_send(){
-    console.log("呼び出し成功")
     $.ajax({
       url: `/groups/${gon.group_id}/games/${gon.game_id}`,
       type: "PATCH",
@@ -12,6 +12,7 @@ $(function() {
       dataType: 'json'
     })
     .done(function(){
+
       window.location.replace(`/groups/${gon.group_id}/games`);
     })
   }
@@ -20,7 +21,11 @@ $(function() {
       console.log($(this).text());
 
       if(gon.user_id == gon.action_id){
-        ajax_send();
+        if(gon.game.deck[0].length == 0){
+          $('.message').text("デッキ枚数切れ")
+        }else{
+          ajax_send();
+        }
       }else{
         $('.message').text("相手のアクションです。")
       }

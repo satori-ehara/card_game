@@ -103,6 +103,7 @@ class GamesController < ApplicationController
     gon.group_id = @game.group_id
     gon.user_id = current_user.id
     gon.action_id = check_id(@game.action)
+    gon.game = @game
   end
 
   def change_kou_otu(turn)
