@@ -1,18 +1,17 @@
 $(function() {
   console.log(gon)
 
-  function ajax_send(){
+  function ajax_send(card){
     $.ajax({
       url: `/groups/${gon.group_id}/games/${gon.game_id}`,
       type: "PATCH",
       data: {
-        hand: $(this).data('hand'),
-        number: Number($(this).text())
+        hand: card.data('hand'),
+        number: Number(card.text())
     },
       dataType: 'json'
     })
     .done(function(){
-
       window.location.replace(`/groups/${gon.group_id}/games`);
     })
   }
@@ -21,11 +20,7 @@ $(function() {
       console.log($(this).text());
 
       if(gon.user_id == gon.action_id){
-        if(gon.game.deck[0].length == 0){
-          $('.message').text("デッキ枚数切れ")
-        }else{
-          ajax_send();
-        }
+          ajax_send($(this));
       }else{
         $('.message').text("相手のアクションです。")
       }

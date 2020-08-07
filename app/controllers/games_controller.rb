@@ -44,13 +44,28 @@ class GamesController < ApplicationController
   end
 
   def update
-    @game.field_card = params[:number]
-    check_turn_player(@game.turn).hand.delete_at(params[:hand].to_i)
-    @game.turn = change_kou_otu(@game.turn)
-    @game.action = change_kou_otu(@game.action)
-    draw_hand(@game.turn)
-    update_all
+    if @game.deck[0].length == 0
+      @game.field_card = params[:number]
+      @game.action = "fight"
+      check_turn_player(@game.turn).hand.delete_at(params[:hand].to_i)
+      if @kou.hand[0] < @otu.hand[0]
+        @game.condition = "otuwon"
+      elsif @kou.hand[0] > @otu.hand[0]
+        @game.condition = "kouwon"
+      else
+        @game.condition = "draw"
+      end
+      update_all
+    else
+      @game.field_card = params[:number]
+      check_turn_player(@game.turn).hand.delete_at(params[:hand].to_i)
+      @game.turn = change_kou_otu(@game.turn)
+      @game.action = change_kou_otu(@game.action)
+      draw_hand(@game.turn)
+      update_all
+    end
   end
+
 
   private
   def create_deck

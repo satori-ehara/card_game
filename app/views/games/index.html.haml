@@ -16,9 +16,15 @@
   .game-main
     .game-main__enemy
       - if @game != nil
-        - Otu.find_by(game_id: @game.id).hand.each do
-          .game-main__enemy--hand-card#card
-            0
+        - if @game.action == "fight"
+          - Otu.find_by(game_id: @game.id).hand.each do |hand|
+            .game-main__enemy--hand-card#card
+              = hand
+        - else
+          - Otu.find_by(game_id: @game.id).hand.each do
+            .game-main__enemy--hand-card#card
+              0
+
       - else
         .game-main__enemy--hand-card#card
           0
@@ -26,17 +32,27 @@
           0
     .game-main__center
       - if @game != nil
-        .game-main__center--deck
-          = "残  " + @game.deck[0].length.to_s + "枚"
-        .game-main__center--field-card
-          = @game.field_card
-        .game-main__center--turn
-          - if @game.turn == "kou"
-            .your
-              = @game.turn
-          - else
-            .enemy
-              = @game.turn
+        - if @game.condition == "started"
+          .game-main__center--deck
+            = "残  " + @game.deck[0].length.to_s + "枚"
+          .game-main__center--field-card
+            = @game.field_card
+          .game-main__center--turn
+            - if @game.turn == "kou"
+              .your
+                = @game.turn
+            - else
+              .enemy
+                = @game.turn
+        - elsif @game.condition == "kouwon" 
+          .winner-message
+            = User.find_by(id: @kou.user_id).nickname + " さんの勝利kou"
+        - elsif @game.condition == "otuwon"
+          .winner-message
+            = User.find_by(id: @otu.user_id).nickname + " さんの勝利otu"
+        - elsif @game.condition == "draw"
+          .winner-message
+            引き分け
     .game-main__player
       .game-main__player--message
         .message
