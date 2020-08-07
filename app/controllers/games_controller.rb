@@ -4,6 +4,8 @@ class GamesController < ApplicationController
 
   def index
     if @game
+      @kou = Kou.find_by(game_id: @game.id)
+      @otu = Otu.find_by(game_id: @game.id)
       get_gon
     end
   end
@@ -45,6 +47,7 @@ class GamesController < ApplicationController
     @game.field_card = params[:number]
     check_turn_player(@game.turn).hand.delete_at(params[:hand].to_i)
     @game.turn = change_kou_otu(@game.turn)
+    @game.action = change_kou_otu(@game.action)
     draw_hand(@game.turn)
     update_all
   end
@@ -98,6 +101,8 @@ class GamesController < ApplicationController
   def get_gon
     gon.game_id = @game.id
     gon.group_id = @game.group_id
+    gon.user_id = current_user.id
+    gon.action_id = check_id(@game.action)
   end
 
   def change_kou_otu(turn)
