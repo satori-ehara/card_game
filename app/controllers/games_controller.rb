@@ -1,7 +1,11 @@
 class GamesController < ApplicationController
-  before_action :get_game,only: [:index,:destroy]
+  before_action :get_game,only: [:index,:destroy,:update]
+  before_action :get_kou_otu,only: [:destroy,:update]
 
   def index
+    if @game
+      get_gon
+    end
   end
 
   def new
@@ -13,7 +17,7 @@ class GamesController < ApplicationController
     params[:field_card] = 0
     params[:turn] = "kou"
     params[:turn_count] = 0
-    params[:action] = "create"
+    params[:action] = "kou"
     @kou_hand = []
     @otu_hand = []
     join_hand(@kou_hand)
@@ -31,12 +35,14 @@ class GamesController < ApplicationController
   end
 
   def destroy
-    @kou = Kou.find_by(game_id: @game.id)
-    @otu = Otu.find_by(game_id: @game.id)
     @kou.destroy
     @otu.destroy
     @game.destroy
     redirect_to group_games_path(params[:group_id])
+  end
+
+  def update
+    check_action(@game.action)
   end
 
   private
@@ -76,4 +82,36 @@ class GamesController < ApplicationController
   def get_game
     @game = Game.find_by(group_id: params[:group_id])
   end
+
+  def get_kou_otu
+    @kou = Kou.find_by(game_id: params[:id])
+    @otu = Otu.find_by(game_id: params[:id])
+  end
+
+  def get_gon
+    gon.game_id = @game.id
+    gon.group_id = @game.group_id
+  end
+
+  def change_kou_otu(turn)
+    if turn == "otu"
+      turn = "kou"
+    elsif turn == "kou"
+      turn = "otu"
+    end
+  end
+
+  def check_id(action)
+    if action == "kou"
+      return @kou.user_id
+    elsif action == "otu"
+      return @otu.user_id
+    end
+  end
+
+  def check_action(action)
+    if current_user.id != 7
+    end
+  end
+
 end
