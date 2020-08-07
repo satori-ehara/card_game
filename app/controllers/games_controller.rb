@@ -42,7 +42,11 @@ class GamesController < ApplicationController
   end
 
   def update
-    check_action(@game.action)
+    @game.field_card = params[:number]
+    check_turn_player(@game.turn).hand.delete_at(params[:hand].to_i)
+    @game.turn = change_kou_otu(@game.turn)
+    draw_hand(@game.turn)
+    update_all
   end
 
   private
@@ -70,13 +74,16 @@ class GamesController < ApplicationController
     @otu.save
   end
 
+  def update_all
+    @game.save
+    @kou.save
+    @otu.save
+  end
+
 
   def join_hand(hand)
     hand << params[:deck][0][0]
     params[:deck][0] = params[:deck][0].drop(1)
-  end
-
-  def create_hand
   end
 
   def get_game
@@ -109,9 +116,17 @@ class GamesController < ApplicationController
     end
   end
 
-  def check_action(action)
-    if current_user.id != 7
+  def check_turn_player(action)
+    if action == "kou"
+      return @kou
+    elsif action == "otu"
+      return @otu
     end
+  end
+
+  def draw_hand(action)
+    check_turn_player(action).hand << @game.deck[0][0]
+    @game.deck[0] = @game.deck[0].drop(1)
   end
 
 end
