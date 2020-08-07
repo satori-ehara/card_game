@@ -46,13 +46,14 @@ class GamesController < ApplicationController
   def update
     if @game.deck[0].length == 0
       @game.field_card = params[:number]
+      @game.action = "fight"
       check_turn_player(@game.turn).hand.delete_at(params[:hand].to_i)
       if @kou.hand[0] < @otu.hand[0]
         @game.condition = "otuwon"
       elsif @kou.hand[0] > @otu.hand[0]
         @game.condition = "kouwon"
       else
-        @game.condition = "drow"
+        @game.condition = "draw"
       end
       update_all
     else
