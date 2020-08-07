@@ -1,27 +1,58 @@
 .game-header
   .game-header__left
+    = form_with url: group_games_path(params[:group_id]), local: true do |f|
+      - if @game == nil
+        .create-game__btn
+          = f.submit "ゲーム開始", class: "start-game"
+      - else
+        .start-game
+          ゲーム中
+        = link_to 'ゲーム削除',  group_game_path(params[:group_id],@game.id), method: :delete, class:'delete-game'
+
+
   .game-header__right
 .game
   .game-side
   .game-main
     .game-main__enemy
-      .game-main__enemy--hand-card#card
-        0
-      .game-main__enemy--hand-card#card
-        0
+      - if @game != nil
+        - Otu.find_by(game_id: @game.id).hand.each do
+          .game-main__enemy--hand-card#card
+            0
+      - else
+        .game-main__enemy--hand-card#card
+          0
+        .game-main__enemy--hand-card#card
+          0
     .game-main__center
-      .game-main__center--deck
-        17枚
-      .game-main__center--field-card
-        8
-      .game-main__center--turn
-        Your Turn
+      - if @game != nil
+        .game-main__center--deck
+          = "残  " + @game.deck[0].length.to_s + "枚"
+        .game-main__center--field-card
+          = @game.field_card
+        .game-main__center--turn
+          - if @game.turn == "kou"
+            .your
+              = @game.turn
+          - else
+            .enemy
+              = @game.turn
     .game-main__player
       .game-main__player--message
         .message
           ここに現在の状況等を出力する
       .game-main__player--hands
-        .game-main__player--hand-card#card
-          9
-        .game-main__player--hand-card#card
-          4
+        - if @game != nil
+          - if current_user.id == Kou.find_by(game_id: @game.id).user_id
+            - Kou.find_by(game_id: @game.id).hand.each_with_index do |hand,n|
+              .game-main__player--hand-card#card{data:{hand: n}}
+                = hand
+          - if current_user.id == Otu.find_by(game_id: @game.id).user_id
+            - Otu.find_by(game_id: @game.id).hand.each_with_index do |hand,n|
+              .game-main__player--hand-card#card{data:{hand: n}}
+                = hand
+        - else
+          .game-main__player--hand-card#card
+            1
+          .game-main__player--hand-card#card
+            10

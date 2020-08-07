@@ -1,0 +1,2 @@
+module KousHelper
+end
