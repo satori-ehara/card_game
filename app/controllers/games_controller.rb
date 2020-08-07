@@ -54,7 +54,7 @@ class GamesController < ApplicationController
       else
         @game.condition = "drow"
       end
-      binding.pry
+      update_all
     else
       @game.field_card = params[:number]
       check_turn_player(@game.turn).hand.delete_at(params[:hand].to_i)
