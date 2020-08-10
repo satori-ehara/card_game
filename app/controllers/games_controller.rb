@@ -57,7 +57,14 @@ class GamesController < ApplicationController
       end
       update_all
     else
-      check_card_number(params[:number].to_i)
+      if params[:number].to_i == 0
+        render json:{number: 0}
+        turn_change_action
+      else
+        @game.field_card = params[:number]
+        check_turn_player(@game.turn).hand.delete_at(params[:hand].to_i)
+        check_card_number(params[:number].to_i)
+      end
     end
   end
 
@@ -88,8 +95,6 @@ class GamesController < ApplicationController
   end
 
   def turn_change_action
-    @game.field_card = params[:number]
-    check_turn_player(@game.turn).hand.delete_at(params[:hand].to_i)
     @game.turn = change_kou_otu(@game.turn)
     @game.action = change_kou_otu(@game.action)
     draw_hand(@game.turn)
@@ -179,34 +184,44 @@ class GamesController < ApplicationController
   end
 
   def card_one
+    render json:{number: @game.field_card.to_i}
     turn_change_action
   end
   def card_two
+    render json:{number: @game.field_card.to_i}
     turn_change_action
   end
   def card_three
-    turn_change_action
+    update_all
+    render json:{number: 3,card: check_turn_player(change_kou_otu(@game.turn)).hand[0]}
   end
   def card_four
+    render json:{number: @game.field_card.to_i}
     turn_change_action
   end
   def card_five
-    draw_hand(change_kou_otu(@game.turn))
-    @game.action = change_kou_otu(@game.action)
-    binding.pry
-
-    render json: { number: 5, name: "test" }
+    # draw_hand(change_kou_otu(@game.turn))
+    # @game.action = change_kou_otu(@game.action)
+    render json:{number: @game.field_card.to_i}
+    turn_change_action
   end
   def card_six
+    render json:{number: @game.field_card.to_i}
     turn_change_action
   end
   def card_seven
+    render json:{number: @game.field_card.to_i}
     turn_change_action
   end
   def card_eight
+    card = @kou.hand[0]
+    @kou.hand[0] = @otu.hand[0]
+    @otu.hand[0] = card
+    render json:{number: @game.field_card.to_i}
     turn_change_action
   end
   def card_nine
+    render json:{number: @game.field_card.to_i}
     turn_change_action
   end
 
