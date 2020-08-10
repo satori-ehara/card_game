@@ -57,6 +57,7 @@ class GamesController < ApplicationController
       end
       update_all
     else
+      check_card_number(params[:number].to_i)
       @game.field_card = params[:number]
       check_turn_player(@game.turn).hand.delete_at(params[:hand].to_i)
       @game.turn = change_kou_otu(@game.turn)
@@ -148,6 +149,18 @@ class GamesController < ApplicationController
   def draw_hand(action)
     check_turn_player(action).hand << @game.deck[0][0]
     @game.deck[0] = @game.deck[0].drop(1)
+  end
+
+  def check_card_number(number)
+    case number
+    when 1 then
+      card_one
+    else
+    end
+  end
+
+  def card_one
+    binding.pry
   end
 
 end
