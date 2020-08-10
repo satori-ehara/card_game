@@ -58,12 +58,6 @@ class GamesController < ApplicationController
       update_all
     else
       check_card_number(params[:number].to_i)
-      @game.field_card = params[:number]
-      check_turn_player(@game.turn).hand.delete_at(params[:hand].to_i)
-      @game.turn = change_kou_otu(@game.turn)
-      @game.action = change_kou_otu(@game.action)
-      draw_hand(@game.turn)
-      update_all
     end
   end
 
@@ -91,6 +85,15 @@ class GamesController < ApplicationController
     @otu.user_id = Group.find_by(id: params[:group_id]).otu_user
     @otu.game_id = Game.find_by(group_id: params[:group_id]).id
     @otu.save
+  end
+
+  def turn_change_action
+    @game.field_card = params[:number]
+    check_turn_player(@game.turn).hand.delete_at(params[:hand].to_i)
+    @game.turn = change_kou_otu(@game.turn)
+    @game.action = change_kou_otu(@game.action)
+    draw_hand(@game.turn)
+    update_all
   end
 
   def update_all
@@ -155,27 +158,56 @@ class GamesController < ApplicationController
     case number
     when 1 then
       card_one
+    when 2 then
+      card_two
+    when 3 then
+      card_three
+    when 4 then
+      card_four
+    when 5 then
+      card_five
+    when 6 then
+      card_six
+    when 7 then
+      card_seven
+    when 8 then
+      card_eight
+    when 9 then
+      card_nine
     else
     end
   end
 
   def card_one
+    turn_change_action
   end
   def card_two
+    turn_change_action
   end
   def card_three
+    turn_change_action
   end
   def card_four
+    turn_change_action
   end
   def card_five
+    draw_hand(change_kou_otu(@game.turn))
+    @game.action = change_kou_otu(@game.action)
+    binding.pry
+
+    render json: { number: 5, name: "test" }
   end
   def card_six
+    turn_change_action
   end
   def card_seven
+    turn_change_action
   end
   def card_eight
+    turn_change_action
   end
   def card_nine
+    turn_change_action
   end
 
 end

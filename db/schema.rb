@@ -18,7 +18,7 @@ ActiveRecord::Schema.define(version: 2020_08_03_091605) do
     t.integer "field_card"
     t.string "turn"
     t.string "action"
-    t.string "turn_count"
+    t.integer "turn_count"
     t.integer "group_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -36,6 +36,7 @@ ActiveRecord::Schema.define(version: 2020_08_03_091605) do
     t.integer "user_id"
     t.integer "game_id"
     t.string "hand"
+    t.string "condition"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
@@ -44,6 +45,7 @@ ActiveRecord::Schema.define(version: 2020_08_03_091605) do
     t.integer "user_id"
     t.integer "game_id"
     t.string "hand"
+    t.string "condition"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end

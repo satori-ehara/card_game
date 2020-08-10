@@ -11,7 +11,8 @@ $(function() {
     },
       dataType: 'json'
     })
-    .done(function(){
+    .done(function(data){
+      console.log(data);
       window.location.replace(`/groups/${gon.group_id}/games`);
     })
   }
