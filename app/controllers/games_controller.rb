@@ -160,7 +160,22 @@ class GamesController < ApplicationController
   end
 
   def card_one
-    binding.pry
+  end
+  def card_two
+  end
+  def card_three
+  end
+  def card_four
+  end
+  def card_five
+  end
+  def card_six
+  end
+  def card_seven
+  end
+  def card_eight
+  end
+  def card_nine
   end
 
 end
