@@ -4,6 +4,7 @@ class CreateOtus < ActiveRecord::Migration[6.0]
       t.integer :user_id
       t.integer :game_id
       t.string :hand
+      t.string :condition
 
       t.timestamps
     end
