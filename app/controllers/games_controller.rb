@@ -190,9 +190,17 @@ class GamesController < ApplicationController
   end
 
   def card_one
-    put_card_action
-    render json:{number: @game.field_card.to_i}
-    turn_change_action
+    if @game.deck[1] == 1 || @game.deck[0].include?(1)
+      put_card_action
+      render json:{number: @game.field_card.to_i}
+      turn_change_action
+    else
+      put_card_action
+      draw_hand(change_kou_otu(@game.turn))
+      update_all
+      render json:{number: 9,card: check_turn_player(change_kou_otu(@game.turn)).hand}
+      ##9と処理が同じなので９と同じ非同期通信へ
+    end
   end
   def card_two
     put_card_action
