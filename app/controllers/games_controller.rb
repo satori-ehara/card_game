@@ -96,6 +96,9 @@ class GamesController < ApplicationController
     @game.turn = change_kou_otu(@game.turn)
     @game.action = change_kou_otu(@game.action)
     draw_hand(@game.turn)
+    if check_turn_player(@game.turn).condition == "guard"
+      check_turn_player(@game.turn).condition = null
+    end
     update_all
   end
 
@@ -190,7 +193,7 @@ class GamesController < ApplicationController
   end
 
   def card_one
-    if @game.deck[1] == 1 || @game.deck[0].include?(1)
+    if @game.deck[1] == 1 || @game.deck[0].include?(1) || check_turn_player(change_kou_otu(@game.turn)).condition == "guard"
       put_card_action
       render json:{number: @game.field_card.to_i}
       turn_change_action
@@ -208,11 +211,18 @@ class GamesController < ApplicationController
     turn_change_action
   end
   def card_three
-    put_card_action
-    update_all
-    render json:{number: 3,card: check_turn_player(change_kou_otu(@game.turn)).hand[0]}
+    if check_turn_player(change_kou_otu(@game.turn)).condition != "guard"
+      put_card_action
+      update_all
+      render json:{number: 3,card: check_turn_player(change_kou_otu(@game.turn)).hand[0]}
+    else
+      put_card_action
+      render json:{number: 0}
+      turn_change_action
+    end
   end
   def card_four
+    check_turn_player(@game.turn).condition = "guard"
     put_card_action
     render json:{number: @game.field_card.to_i}
     turn_change_action
@@ -235,18 +245,30 @@ class GamesController < ApplicationController
     turn_change_action
   end
   def card_eight
-    put_card_action
-    card = @kou.hand[0]
-    @kou.hand[0] = @otu.hand[0]
-    @otu.hand[0] = card
-    render json:{number: @game.field_card.to_i}
-    turn_change_action
+    if check_turn_player(change_kou_otu(@game.turn)).condition != "guard"
+      put_card_action
+      card = @kou.hand[0]
+      @kou.hand[0] = @otu.hand[0]
+      @otu.hand[0] = card
+      render json:{number: @game.field_card.to_i}
+      turn_change_action
+    else
+      put_card_action
+      render json:{number: 0}
+      turn_change_action
+    end
   end
   def card_nine
-    put_card_action
-    draw_hand(change_kou_otu(@game.turn))
-    update_all
-    render json:{number: @game.field_card.to_i,card: check_turn_player(change_kou_otu(@game.turn)).hand}
+    if check_turn_player(change_kou_otu(@game.turn)).condition != "guard"
+      put_card_action
+      draw_hand(change_kou_otu(@game.turn))
+      update_all
+      render json:{number: @game.field_card.to_i,card: check_turn_player(change_kou_otu(@game.turn)).hand}
+    else
+      put_card_action
+      render json:{number: 0}
+      turn_change_action
+    end
   end
   def card_nine_one
     check_turn_player(change_kou_otu(@game.turn)).hand.delete_at(params[:hand].to_i)
