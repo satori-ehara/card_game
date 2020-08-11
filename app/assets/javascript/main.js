@@ -22,6 +22,20 @@ $(function() {
           $('.message').append(button);
           $('.redirect').on('click', next_turn);
         break;
+        case 9:
+          $('.game-main__enemy').empty();
+          $.each(data.card, function(index, value){
+            enemy_hand = `<div class="game-main__enemy--hand-open" id="card" data-hand="${index}">${value}</div>`
+            $('.game-main__enemy').append(enemy_hand);
+          })
+          $(".game-main__player--hand-card").off("click");
+          $('.game-main__enemy--hand-open').on({'click': function() {
+            console.log($(this).text());
+            ajax_send($(this).data('hand'),91)
+            }
+          })
+          // $('.game-main__enemy').append(enemy_hand.text(data.card[1]));
+        break;
         default:
           console.log("ここ通りましたよ");
           window.location.replace(`/groups/${gon.group_id}/games`);
