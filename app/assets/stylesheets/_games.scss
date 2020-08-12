@@ -91,6 +91,7 @@
       height: 35%;
       @include center();
       .message{
+        @include center();
         background-color: wheat;
         padding: 8px;
         border: solid 3px black;

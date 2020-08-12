@@ -52,10 +52,10 @@
             - else
               .enemy
                 = @game.turn
-        - elsif @game.condition == "kouwon" 
+        - elsif @game.condition == "kou" 
           .winner-message
             = User.find_by(id: @kou.user_id).nickname + " さんの勝利kou"
-        - elsif @game.condition == "otuwon"
+        - elsif @game.condition == "otu"
           .winner-message
             = User.find_by(id: @otu.user_id).nickname + " さんの勝利otu"
         - elsif @game.condition == "draw"

@@ -44,14 +44,15 @@ class GamesController < ApplicationController
   end
 
   def update
+    binding.pry
     if @game.deck[0].length == 0
       @game.field_card = params[:number]
       @game.action = "fight"
       check_turn_player(@game.turn).hand.delete_at(params[:hand].to_i)
       if @kou.hand[0] < @otu.hand[0]
-        @game.condition = "otuwon"
+        @game.condition = "otu"
       elsif @kou.hand[0] > @otu.hand[0]
-        @game.condition = "kouwon"
+        @game.condition = "kou"
       else
         @game.condition = "draw"
       end
@@ -97,7 +98,7 @@ class GamesController < ApplicationController
     @game.action = change_kou_otu(@game.action)
     draw_hand(@game.turn)
     if check_turn_player(@game.turn).condition == "guard"
-      check_turn_player(@game.turn).condition = null
+      check_turn_player(@game.turn).condition = ""
     end
     update_all
   end
@@ -172,6 +173,8 @@ class GamesController < ApplicationController
       card_one
     when 2 then
       card_two
+    when 21 then
+      card_two_one
     when 3 then
       card_three
     when 4 then
@@ -205,11 +208,20 @@ class GamesController < ApplicationController
       ##9と処理が同じなので９と同じ非同期通信へ
     end
   end
+
   def card_two
-    put_card_action
-    render json:{number: @game.field_card.to_i}
-    turn_change_action
+    render json:{number: params[:number].to_i}
   end
+  def card_two_one
+    if check_turn_player(change_kou_otu(@game.turn)).hand[0] == params[:hand].to_i
+      @game.condition = @game.turn
+      update_all
+    else
+      turn_change_action
+    end
+    render json:{number: params[:number].to_i}
+  end
+
   def card_three
     if check_turn_player(change_kou_otu(@game.turn)).condition != "guard"
       put_card_action
