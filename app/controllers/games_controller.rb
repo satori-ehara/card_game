@@ -258,6 +258,7 @@ class GamesController < ApplicationController
   def card_five
     put_card_action
     draw_hand(change_kou_otu(@game.turn))
+    update_all
     render json:{number: @game.field_card.to_i,card: check_turn_player(change_kou_otu(@game.turn)).hand}
   end
 
@@ -329,6 +330,7 @@ class GamesController < ApplicationController
     end
   end
   def card_nine_one
+    check_turn_player(change_kou_otu(@game.turn)).discard << check_turn_player(change_kou_otu(@game.turn)).hand[params[:hand].to_i]
     check_turn_player(change_kou_otu(@game.turn)).hand.delete_at(params[:hand].to_i)
     turn_change_action
     render json:{number: 0}
