@@ -8,6 +8,7 @@ class CreateGames < ActiveRecord::Migration[6.0]
       t.string :action
       t.integer :turn_count
       t.integer :group_id
+      t.string :one_used
 
       t.timestamps
     end

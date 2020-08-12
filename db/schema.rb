@@ -20,6 +20,7 @@ ActiveRecord::Schema.define(version: 2020_08_03_091605) do
     t.string "action"
     t.integer "turn_count"
     t.integer "group_id"
+    t.string "one_used"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
@@ -37,6 +38,7 @@ ActiveRecord::Schema.define(version: 2020_08_03_091605) do
     t.integer "game_id"
     t.string "hand"
     t.string "condition"
+    t.text "discard"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
@@ -46,6 +48,7 @@ ActiveRecord::Schema.define(version: 2020_08_03_091605) do
     t.integer "game_id"
     t.string "hand"
     t.string "condition"
+    t.text "discard"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end

@@ -44,7 +44,6 @@ class GamesController < ApplicationController
   end
 
   def update
-    binding.pry
     if @game.deck[0].length == 0
       @game.field_card = params[:number]
       @game.action = "fight"
@@ -105,6 +104,7 @@ class GamesController < ApplicationController
 
   def put_card_action
     @game.field_card = params[:number]
+    check_turn_player(@game.turn).discard << params[:number]
     check_turn_player(@game.turn).hand.delete_at(params[:hand].to_i)
   end
 
@@ -136,6 +136,9 @@ class GamesController < ApplicationController
     gon.user_id = current_user.id
     gon.action_id = check_id(@game.action)
     gon.game = @game
+
+    gon.kou = @kou
+    gon.otu = @otu
   end
 
   def change_kou_otu(turn)
