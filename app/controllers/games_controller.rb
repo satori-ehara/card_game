@@ -230,8 +230,14 @@ class GamesController < ApplicationController
   end
   def card_two_one
     if check_turn_player(change_kou_otu(@game.turn)).hand[0] == params[:hand].to_i
-      @game.condition = @game.turn
-      update_all
+      if params[:hand].to_i != 10
+        @game.condition = @game.turn
+        update_all
+      else
+        check_turn_player(change_kou_otu(@game.turn)).hand[0] == @game.deck[1]
+        update_all
+        turn_change_action
+      end
     else
       turn_change_action
     end
