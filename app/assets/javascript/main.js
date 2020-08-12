@@ -48,6 +48,19 @@ $(function() {
           $('.message').append(button);
           $('.redirect').on('click', next_turn);
         break;
+        case 5:
+          $('.message').empty();
+          $('.message').text("破棄させる相手の手札を選択して下さい。");
+          $('.game-main__enemy').empty();
+          $.each(data.card, function(index, value){
+            enemy_hand = `<div class="game-main__enemy--hand-card" id="card" data-hand="${index}">0</div>`
+            $('.game-main__enemy').append(enemy_hand);
+          })
+          $('.game-main__enemy--hand-card').on({'click': function() {
+            ajax_send($(this).data('hand'),91)
+            }
+          })
+        break;
         case 9:
           $('.game-main__enemy').empty();
           $.each(data.card, function(index, value){
@@ -75,7 +88,12 @@ $(function() {
         return false;
       }
       if(gon.user_id == gon.action_id){
-        ajax_send($(this).data('hand'),Number($(this).text()));
+        if($(this).data('hand') >= 10){
+          console.log($(this).data('hand')-10);
+          ajax_send($(this).data('hand')-10,71);
+        }else{
+          ajax_send($(this).data('hand'),Number($(this).text()));
+        }
       }else{
         $('.message').text("相手のアクションです。")
       }

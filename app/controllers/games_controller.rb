@@ -95,11 +95,19 @@ class GamesController < ApplicationController
   def turn_change_action
     @game.turn = change_kou_otu(@game.turn)
     @game.action = change_kou_otu(@game.action)
-    draw_hand(@game.turn)
     if check_turn_player(@game.turn).condition == "guard"
       check_turn_player(@game.turn).condition = ""
-    end
+      draw_hand(@game.turn)
+      update_all
+    elsif check_turn_player(@game.turn).condition == "wise"
+      array = [@game.deck[0][0],@game.deck[0][1],@game.deck[0][2]]
+      check_turn_player(@game.turn).hand[1] = array
+      @game.deck[0] = @game.deck[0].drop(3)
+      update_all
+    else
+    draw_hand(@game.turn)
     update_all
+    end
   end
 
   def put_card_action
@@ -167,7 +175,7 @@ class GamesController < ApplicationController
 
   def draw_hand(action)
     check_turn_player(action).hand << @game.deck[0][0]
-    check_turn_player(action).hand.shuffle
+    check_turn_player(action).hand = check_turn_player(action).hand.shuffle
     @game.deck[0] = @game.deck[0].drop(1)
   end
 
@@ -189,6 +197,8 @@ class GamesController < ApplicationController
       card_six
     when 7 then
       card_seven
+    when 71 then
+      card_seven_one
     when 8 then
       card_eight
     when 9 then
@@ -247,10 +257,8 @@ class GamesController < ApplicationController
   end
   def card_five
     put_card_action
-    # draw_hand(change_kou_otu(@game.turn))
-    # @game.action = change_kou_otu(@game.action)
-    render json:{number: @game.field_card.to_i}
-    turn_change_action
+    draw_hand(change_kou_otu(@game.turn))
+    render json:{number: @game.field_card.to_i,card: check_turn_player(change_kou_otu(@game.turn)).hand}
   end
 
   def card_six
@@ -275,10 +283,25 @@ class GamesController < ApplicationController
   end
 
   def card_seven
+    check_turn_player(@game.turn).condition = "wise"
     put_card_action
     render json:{number: @game.field_card.to_i}
     turn_change_action
   end
+  def card_seven_one
+    hand = check_turn_player(@game.turn).hand[1][params[:hand].to_i]
+    check_turn_player(@game.turn).hand[1].delete_at(params[:hand].to_i)
+    @game.deck[0] << check_turn_player(@game.turn).hand[1][0]
+    @game.deck[0] << check_turn_player(@game.turn).hand[1][1]
+    @game.deck[0] = @game.deck[0].shuffle
+    check_turn_player(@game.turn).hand.delete_at(1)
+    check_turn_player(@game.turn).hand << hand
+    check_turn_player(@game.turn).condition = ""
+    update_all
+
+    render json:{number: 0}
+  end
+
   def card_eight
     if check_turn_player(change_kou_otu(@game.turn)).condition != "guard"
       put_card_action
