@@ -43,6 +43,17 @@
     width: 80%;
     height: 100%;
     background-color: #98fb98;
+    @include center();
+    .kou__discard{
+        border: solid 1px black;
+        margin: 2px;
+        background-color: white;
+    }
+    .otu__discard{
+      border: solid 1px black;
+      margin: 2px;
+      background-color: white;
+  }
   }
 }
 .game{

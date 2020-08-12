@@ -19,6 +19,14 @@
 
 
   .game-header__right
+    .kou__discard
+      - if @game != nil
+        = "先攻捨て札："
+        = @kou.discard
+    .otu__discard
+      - if @game != nil
+        = "後攻捨て札："
+        = @otu.discard
 .game
   .game-side
   .game-main

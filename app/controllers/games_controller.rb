@@ -167,6 +167,7 @@ class GamesController < ApplicationController
 
   def draw_hand(action)
     check_turn_player(action).hand << @game.deck[0][0]
+    check_turn_player(action).hand.shuffle
     @game.deck[0] = @game.deck[0].drop(1)
   end
 
@@ -213,6 +214,8 @@ class GamesController < ApplicationController
   end
 
   def card_two
+    put_card_action
+    update_all
     render json:{number: params[:number].to_i}
   end
   def card_two_one
@@ -249,11 +252,28 @@ class GamesController < ApplicationController
     render json:{number: @game.field_card.to_i}
     turn_change_action
   end
+
   def card_six
-    put_card_action
-    render json:{number: @game.field_card.to_i}
-    turn_change_action
+    if check_turn_player(change_kou_otu(@game.turn)).condition != "guard"
+      put_card_action
+      if @kou.hand[0] < @otu.hand[0]
+        @game.action = "fight"
+        @game.condition = "otu"
+      elsif @kou.hand[0] > @otu.hand[0]
+        @game.action = "fight"
+        @game.condition = "kou"
+      else
+        turn_change_action
+      end
+      render json:{number: @game.field_card.to_i}
+      update_all
+    else
+      put_card_action
+      render json:{number: 0}
+      turn_change_action
+    end
   end
+
   def card_seven
     put_card_action
     render json:{number: @game.field_card.to_i}
