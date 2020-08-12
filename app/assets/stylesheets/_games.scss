@@ -80,6 +80,14 @@
     height: 20%;
     background-color: wheat;
     @include center();
+    &--field-card{
+      font-size: 80px;
+      width: 80px;
+      height: 80px;
+      border: solid 1px black;
+      background-color: lightgray;
+      @include center();
+    }
     &--turn{
       .your{
         padding: 3px;

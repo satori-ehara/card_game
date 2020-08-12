@@ -21,6 +21,7 @@ ActiveRecord::Schema.define(version: 2020_08_03_091605) do
     t.integer "turn_count"
     t.integer "group_id"
     t.string "one_used"
+    t.string "message"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
