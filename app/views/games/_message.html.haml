@@ -1,0 +1,25 @@
+-if @game.turn == @game.action
+  -if @action_player == "true"
+    あなたのターンです。出すカードを選択して下さい。
+  - else
+    相手の選択を待っています。
+-else
+  - case @game.field_card
+  - when 1 then
+    = @game.field_card.to_s + "です。" + @action_player
+  - when 2 then
+    = @game.field_card.to_s + "です。"
+  - when 3 then
+    = @game.field_card.to_s + "です。"
+  - when 4 then
+    = @game.field_card.to_s + "です。"
+  - when 5 then
+    = @game.field_card.to_s + "です。"
+  - when 6 then
+    = @game.field_card.to_s + "です。確認したらボタンを押して下さい。"
+  - when 7 then
+    = @game.field_card.to_s + "です。"
+  - when 8 then
+    = @game.field_card.to_s + "です。"
+  - when 9 then
+    = @game.field_card.to_s + "です。"

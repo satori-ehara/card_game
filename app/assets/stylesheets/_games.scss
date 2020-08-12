@@ -43,6 +43,17 @@
     width: 80%;
     height: 100%;
     background-color: #98fb98;
+    @include center();
+    .kou__discard{
+        border: solid 1px black;
+        margin: 2px;
+        background-color: white;
+    }
+    .otu__discard{
+      border: solid 1px black;
+      margin: 2px;
+      background-color: white;
+  }
   }
 }
 .game{
@@ -69,6 +80,14 @@
     height: 20%;
     background-color: wheat;
     @include center();
+    &--field-card{
+      font-size: 80px;
+      width: 80px;
+      height: 80px;
+      border: solid 1px black;
+      background-color: lightgray;
+      @include center();
+    }
     &--turn{
       .your{
         padding: 3px;
@@ -91,6 +110,7 @@
       height: 35%;
       @include center();
       .message{
+        @include center();
         background-color: wheat;
         padding: 8px;
         border: solid 3px black;
