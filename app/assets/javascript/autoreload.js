@@ -1,3 +1,7 @@
 $(function(){
-  console.log("autoreload");
+  function reload(){
+    console.log("autoreload");
+  }
+
+  setInterval(reload, 2000);
 })
