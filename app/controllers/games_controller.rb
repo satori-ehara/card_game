@@ -57,6 +57,7 @@ class GamesController < ApplicationController
         @game.condition = "draw"
       end
       update_all
+      render json:{number: 0}
     else
       if params[:number].to_i == 0
         render json:{number: 0}
@@ -96,16 +97,29 @@ class GamesController < ApplicationController
   def turn_change_action
     @game.turn = change_kou_otu(@game.turn)
     @game.action = change_kou_otu(@game.action)
+    @game.turn_count += 1
     if check_turn_player(@game.turn).condition == "guard"
       check_turn_player(@game.turn).condition = ""
       draw_hand(@game.turn)
       update_all
     elsif check_turn_player(@game.turn).condition == "wise"
       change_message("未来視を発動中です...")
-      array = [@game.deck[0][0],@game.deck[0][1],@game.deck[0][2]]
-      check_turn_player(@game.turn).hand[1] = array
-      @game.deck[0] = @game.deck[0].drop(3)
-      update_all
+      if @game.deck[0].length > 2
+        array = [@game.deck[0][0],@game.deck[0][1],@game.deck[0][2]]
+        check_turn_player(@game.turn).hand[1] = array
+        @game.deck[0] = @game.deck[0].drop(3)
+        update_all
+      elsif @game.deck[0].length == 2
+        array = [@game.deck[0][0],@game.deck[0][1]]
+        check_turn_player(@game.turn).hand[1] = array
+        @game.deck[0] = @game.deck[0].drop(2)
+        update_all
+      else
+        check_turn_player(@game.turn).condition = ""
+        change_message("未来視によってカードが選ばれました。")
+        draw_hand(@game.turn)
+        update_all
+      end
     else
     draw_hand(@game.turn)
     update_all
@@ -384,7 +398,6 @@ class GamesController < ApplicationController
         check_turn_player(change_kou_otu(@game.turn)).discard << check_turn_player(change_kou_otu(@game.turn)).hand[0]
         check_turn_player(change_kou_otu(@game.turn)).hand.delete_at(0)
         check_turn_player(change_kou_otu(@game.turn)).hand << @game.deck[1][0]
-        binding.pry
         turn_change_action
       end
     else
