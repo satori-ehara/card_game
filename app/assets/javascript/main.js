@@ -1,5 +1,4 @@
 $(function() {
-  console.log(gon)
 
   function ajax_send(hand,number){
     $.ajax({
@@ -72,10 +71,8 @@ $(function() {
             ajax_send($(this).data('hand'),91)
             }
           })
-          // $('.game-main__enemy').append(enemy_hand.text(data.card[1]));
         break;
         default:
-          console.log("ここ通りましたよ");
           window.location.replace(`/groups/${gon.group_id}/games`);
         break;
       }
@@ -88,7 +85,6 @@ $(function() {
       }
       if(gon.user_id == gon.action_id){
         if($(this).data('hand') >= 10){
-          console.log($(this).data('hand')-10);
           ajax_send($(this).data('hand')-10,71);
         }else{
           if($(this).text() != 10){
