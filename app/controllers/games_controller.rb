@@ -230,10 +230,15 @@ class GamesController < ApplicationController
   end
 
   def card_one
-    if @game.deck[1] == 1 || @game.deck[0].include?(1) || check_turn_player(change_kou_otu(@game.turn)).condition == "guard"
+    if @game.one_used != "used" || check_turn_player(change_kou_otu(@game.turn)).condition == "guard"
       put_card_action
       render json:{number: @game.field_card.to_i}
-      change_message("最初の1なので、効果はありませんでした。")
+      if check_turn_player(change_kou_otu(@game.turn)).condition == "guard"
+        change_message("守護により発動しませんでした。")
+      else
+        change_message("最初の1なので、効果はありませんでした。")
+      end
+      @game.one_used = "used"
       turn_change_action
     else
       put_card_action
