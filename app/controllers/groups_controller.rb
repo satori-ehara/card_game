@@ -14,6 +14,18 @@ class GroupsController < ApplicationController
     end
   end
 
+  def destroy
+    @group = Group.find(params[:id])
+    @game = Game.find_by(group_id: params[:id])
+    @kou = Kou.find_by(game_id: @game.id)
+    @otu = Otu.find_by(game_id: @game.id)
+    @group.destroy
+    @kou.destroy
+    @otu.destroy
+    @game.destroy
+    redirect_to root_path
+  end
+
   private
 
   def group_params

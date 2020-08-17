@@ -1,5 +1,4 @@
 $(function() {
-  console.log(gon)
 
   function ajax_send(hand,number){
     $.ajax({
@@ -72,10 +71,8 @@ $(function() {
             ajax_send($(this).data('hand'),91)
             }
           })
-          // $('.game-main__enemy').append(enemy_hand.text(data.card[1]));
         break;
         default:
-          console.log("ここ通りましたよ");
           window.location.replace(`/groups/${gon.group_id}/games`);
         break;
       }
@@ -83,16 +80,18 @@ $(function() {
   }
 
   $('.game-main__player--hand-card').on({'click': function(e) {
-      console.log($(this).text());
       if(gon.game.condition != "started"){
         return false;
       }
       if(gon.user_id == gon.action_id){
         if($(this).data('hand') >= 10){
-          console.log($(this).data('hand')-10);
           ajax_send($(this).data('hand')-10,71);
         }else{
-          ajax_send($(this).data('hand'),Number($(this).text()));
+          if($(this).text() != 10){
+            ajax_send($(this).data('hand'),Number($(this).text()));
+          }else{
+            $('.message').text("このカードは出すことができません")
+          }
         }
       }else{
         $('.message').text("相手のアクションです。")

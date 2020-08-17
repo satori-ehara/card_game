@@ -1,7 +1,6 @@
 $(function(){
   $('[id=card]').mouseover(function() {
  
-    console.log($(this).text());
 
     search_ability($(this).text())
 

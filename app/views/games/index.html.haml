@@ -15,7 +15,7 @@
       - else
         .start-game
           ゲーム中
-        = link_to 'ゲーム削除',  group_game_path(params[:group_id],@game.id), method: :delete, class:'delete-game'
+        = link_to '部屋削除',  group_path(params[:group_id],@game.id), method: :delete, class:'delete-group'
 
 
   .game-header__right
@@ -37,9 +37,14 @@
             .game-main__enemy--hand-card#card
               = hand
         - else
-          - Otu.find_by(game_id: @game.id).hand.each do |hand|
-            .game-main__enemy--hand-card#card
-              0
+          - if current_user.id == Kou.find_by(game_id: @game.id).user_id
+            - Kou.find_by(game_id: @game.id).hand.each do
+              .game-main__enemy--hand-card#card
+                0
+          - if current_user.id == Otu.find_by(game_id: @game.id).user_id
+            - Otu.find_by(game_id: @game.id).hand.each do
+              .game-main__enemy--hand-card#card
+                0
 
       - else
         .game-main__enemy--hand-card#card
@@ -62,13 +67,16 @@
                 = "後攻"
         - elsif @game.condition == "kou" 
           .winner-message
-            = User.find_by(id: @kou.user_id).nickname + " さんの勝利kou"
+            = User.find_by(id: @kou.user_id).nickname + " さんの勝利　"
+            = link_to 'ゲーム削除',  group_game_path(params[:group_id],@game.id), method: :delete, class:'delete-game'
         - elsif @game.condition == "otu"
           .winner-message
-            = User.find_by(id: @otu.user_id).nickname + " さんの勝利otu"
+            = User.find_by(id: @otu.user_id).nickname + " さんの勝利　"
+            = link_to 'ゲーム削除',  group_game_path(params[:group_id],@game.id), method: :delete, class:'delete-game'
         - elsif @game.condition == "draw"
           .winner-message
             引き分け
+            = link_to 'ゲーム削除',  group_game_path(params[:group_id],@game.id), method: :delete, class:'delete-game'
     .game-main__player
       .game-main__player--message
         .message
