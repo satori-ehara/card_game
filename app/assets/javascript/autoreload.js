@@ -17,5 +17,5 @@ $(function(){
     })
   }
 
-  setInterval(reload, 5000);
+  setInterval(reload, 3000);
 })
