@@ -15,7 +15,7 @@
       - else
         .start-game
           ゲーム中
-        = link_to '部屋削除',  group_game_path(params[:group_id],@game.id), method: :delete, class:'delete-group'
+        = link_to '部屋削除',  group_path(params[:group_id],@game.id), method: :delete, class:'delete-group'
 
 
   .game-header__right
