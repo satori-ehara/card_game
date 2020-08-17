@@ -256,8 +256,9 @@ class GamesController < ApplicationController
         change_message(params[:hand] + "を指摘し、成功しました。")
         update_all
       else
-        check_turn_player(change_kou_otu(@game.turn)).hand[0] == @game.deck[1]
-        check_turn_player(change_kou_otu(@game.turn)).discard << 10
+        check_turn_player(change_kou_otu(@game.turn)).hand.delete_at(0)
+        check_turn_player(change_kou_otu(@game.turn)).hand[0] = @game.deck[1][0]
+        check_turn_player(change_kou_otu(@game.turn)).discard << "10"
         change_message(params[:hand] + "を指摘し、成功しましたが10であるため転生しました。")
         update_all
         turn_change_action
@@ -310,9 +311,11 @@ class GamesController < ApplicationController
       if @kou.hand[0] < @otu.hand[0]
         @game.action = "fight"
         @game.condition = "otu"
+        @game.turn_count += 1
       elsif @kou.hand[0] > @otu.hand[0]
         @game.action = "fight"
         @game.condition = "kou"
+        @game.turn_count += 1
       else
         change_message("引き分け（続行）となりました。")
         turn_change_action
@@ -403,7 +406,6 @@ class GamesController < ApplicationController
     else
       check_turn_player(change_kou_otu(@game.turn)).discard << check_turn_player(change_kou_otu(@game.turn)).hand[params[:hand].to_i]
       check_turn_player(change_kou_otu(@game.turn)).hand.delete_at(params[:hand].to_i)
-      check_turn_player(change_kou_otu(@game.turn)).hand[0] == @game.deck[1] ##転生
       turn_change_action
     end
     render json:{number: 0}
