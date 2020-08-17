@@ -83,7 +83,6 @@ $(function() {
   }
 
   $('.game-main__player--hand-card').on({'click': function(e) {
-      console.log($(this).text());
       if(gon.game.condition != "started"){
         return false;
       }
@@ -92,7 +91,11 @@ $(function() {
           console.log($(this).data('hand')-10);
           ajax_send($(this).data('hand')-10,71);
         }else{
-          ajax_send($(this).data('hand'),Number($(this).text()));
+          if($(this).text() != 10){
+            ajax_send($(this).data('hand'),Number($(this).text()));
+          }else{
+            $('.message').text("このカードは出すことができません")
+          }
         }
       }else{
         $('.message').text("相手のアクションです。")
