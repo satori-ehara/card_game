@@ -3,6 +3,9 @@ Rails.application.routes.draw do
   root to: "groups#index"
   resources :groups,only: [:index, :new, :create] do
     resources :games
+    namespace :api do
+      resources :games, only: :index, defaults: { format: 'json' }
+    end
   end
   resources :kous, only: [:create]
 end
