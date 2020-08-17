@@ -14,7 +14,7 @@
   margin: 0 20px;
 }
 
-.start-game,.delete-game{
+.start-game,.delete-game,.delete-group{
   display: block;
   width: 100%;
   height: 35px;
@@ -25,8 +25,18 @@
   color: black;
 }
 
+.delete-game{
+  font-size: 16px;
+  width: 80px;
+}
+
+.delete-group{
+  background-color: lightpink;
+}
+
 .winner-message{
   font-size: 40px;
+  @include center();
 }
 
 .game-header{
