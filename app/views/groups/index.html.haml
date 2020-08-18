@@ -3,6 +3,7 @@
     = link_to new_group_path,class: "header__group--new" do
       部屋作成
   .header__title
+    Title募集
   .header__devise
     - if user_signed_in?
       = link_to destroy_user_session_path, method: :delete,class: "header__devise--login" do
