@@ -5,4 +5,8 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
   has_many :kous
   has_many :otus
+
+  def email_required?
+    false
+  end
 end

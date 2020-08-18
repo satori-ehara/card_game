@@ -7,12 +7,16 @@
 .header{
   width: 100vw;
   height: 100px;
-  background-color: lightgreen;
+  border-top: solid 15px lightgreen;
+  border-bottom: solid 3px black;
+  background-color: #ddfbdd;
+  box-sizing: border-box;
+
   display: flex;
   &__group{
     width: 20%;
     height: 100%;
-    background-color: #98fb98;
+    background-color: #ddfbdd;
     @include center();
     &--new{
       display: block;
@@ -28,15 +32,17 @@
   &__title{
     width: 60%;
     height: 100%;
+    @include center();
+    font-size: 50px;
   }
   &__devise{
     width: 20%;
     height: 100%;
-    background-color: #98fb98;
+    background-color: #ddfbdd;
     @include center();
     &--new,&--login{
       display: block;
-      width: 40%;
+      width: 60%;
       height: 35px;
       background-color: lightblue;
       border: solid 1px blue;
@@ -53,12 +59,16 @@
   &__side--left,&__side--right{
     height: 100%;
     width: 20%;
-    background-color: #7fffd4;
+    background-color: #fcf3e6;
   }
   &__groups{
     height: 100%;
     width: 60%;
-    background-color: #98fb98;
+    background-color: #e8fff7;
+    overflow: scroll;
+    border-left: groove 3px gray;
+    border-right: groove 3px gray;
+    box-sizing: border-box;
     &--group{
       display: block;
       text-decoration: none;
@@ -67,7 +77,7 @@
       width: auto;
       margin: 25px;
       border: solid 1px black;
-      background-color: cornsilk;
+      background-color: #EEEEEE;
       .group-name{
         font-size: 35px;
         margin: 10px 0 0 10px;
@@ -76,10 +86,27 @@
         height: 30px;
         @include center();
         &__kou,&__otu{
-          border: solid 1px black;
+          background-color: lightyellow;
+          border: ridge 3px lightyellow;
           padding: 3px;
         }
       }
     }
+  }
+}
+
+.main-create{
+  width: 100vw;
+  height: 100vh;
+  background-color: #fffcef;
+  @include center();
+  .create-group{
+    @include center();
+    width: 40%;
+    height: 40%;
+    border-radius: 30px;
+    justify-content: center;
+    border: solid 5px lightblue;
+    background-color: #eff7ff;
   }
 }

@@ -3,12 +3,13 @@
     = link_to new_group_path,class: "header__group--new" do
       部屋作成
   .header__title
+    Title募集
   .header__devise
     - if user_signed_in?
       = link_to destroy_user_session_path, method: :delete,class: "header__devise--login" do
         = current_user.nickname
     - else
-      = link_to "#",class: "header__devise--login" do
+      = link_to user_session_path,class: "header__devise--login" do
         ログイン
       = link_to new_user_registration_path,class: "header__devise--new" do
         新規登録
