@@ -1,21 +1,16 @@
 <div class="contents row">
   <div class="container">
-    <h2>Sign up</h2>
+    <h2>登録して下さい。</h2>
     <%= form_with model: @user, url: user_registration_path, id: 'new_user', class: 'new_user', local: true do |f| %>
       <%= devise_error_messages! %>
 
       <div class="field">
-        <%= f.label :nickname %> <br />
+        <%= "ニックネーム"%><br>
         <%= f.text_field :nickname, autofocus: true %>
       </div>
 
       <div class="field">
-        <%= f.label :email %><br />
-        <%= f.email_field :email %>
-      </div>
-
-      <div class="field">
-        <%= f.label :password %>
+        <%= f.label "password" %>
         <% if @validatable %>
           <em>(<%= @minimum_password_length %> characters minimum)</em>
         <% end %><br />
@@ -23,7 +18,7 @@
       </div>
 
       <div class="field">
-        <%= f.label :password_confirmation %><br />
+        <%= f.label "password再入力" %><br />
         <%= f.password_field :password_confirmation, autocomplete: "off" %>
       </div>
 
