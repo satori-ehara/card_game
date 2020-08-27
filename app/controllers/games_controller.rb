@@ -250,9 +250,17 @@ class GamesController < ApplicationController
   end
 
   def card_two
-    put_card_action
-    update_all
-    render json:{number: params[:number].to_i}
+    if check_turn_player(change_kou_otu(@game.turn)).condition == "guard"
+      put_card_action
+      change_message("守護により発動しませんでした。")
+      update_all
+      turn_change_action
+      render json:{number: 0}
+    else
+      put_card_action
+      update_all
+      render json:{number: params[:number].to_i}
+    end
   end
   def card_two_one
     if check_turn_player(change_kou_otu(@game.turn)).hand[0] == params[:hand].to_i
