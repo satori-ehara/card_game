@@ -4,6 +4,10 @@ class GroupsController < ApplicationController
 
   def new
     @group = Group.new()
+    if user_signed_in?
+    else
+      redirect_to new_user_registration_path
+    end
   end
 
   def create
@@ -11,6 +15,8 @@ class GroupsController < ApplicationController
     @group = Group.new(group_params)
     if @group.save
       redirect_to root_path
+    else
+      redirect_to groups_path
     end
   end
 
