@@ -1,8 +1,21 @@
+# アプリ名
+# どんな事ができるのか
+## アナログカードゲーム「Xeno」をネット上の友人とプレイできるアプリ
+# 使用方法
+## 🌐 App URL
+
+### **https://cupramen-timer.firebaseapp.com**  
+# 作成背景
+# 
+
+
+
+# データベース設計
+
 ## usersテーブル
 |Column|Type|Options|
 |------|----|-------|
 |nickname|string|null: false|
-|email|string|null: false|
 |password|string|null: false|
 ### Association
 - has_many :kou
@@ -15,8 +28,8 @@
 |deck|text|null: false|
 |field_card|string|null: false|
 |turn|string|null: false|
-|turn_count|integer|null: false, foreign_key: true|
-|action|string|null: false, foreign_key: true|
+|turn_count|integer|null: false|
+|action|string|null: false|
 ### Association
 - belongs_to :group
 - belongs_to :kou
