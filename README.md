@@ -10,7 +10,7 @@
 # アプリケーション使用方法
 ## 🌐 App URL
 
-### **https://cupramen-timer.firebaseapp.com**  
+### **https://card-game-satorin.herokuapp.com/**  
 
 ## 手順① 登録、またはログイン
 
