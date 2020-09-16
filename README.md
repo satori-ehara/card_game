@@ -14,12 +14,12 @@
 
 ## ログインアカウント
 
-アカウント１
-Nickname: 対戦者1
+アカウント１<rb>
+Nickname: 対戦者1<rb>
 Password: 123qwe
 
-アカウント２
-Nickname: 対戦者2
+アカウント２<rb>
+Nickname: 対戦者2<rb>
 Password: 123qwe
 
 よければ上記のアカウントを使ってください。ログイン方法は以下にあります。
